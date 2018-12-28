@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body markdown">
                         @if($article->content_html)
-                            {{$article->content_hrml}}
+                            {{$article->content_html}}
                         @else
                             {!! Parsedown::instance()->setMarkupEscaped(true)->text($article->content) !!}
                         @endif
