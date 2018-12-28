@@ -51,7 +51,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
@@ -64,6 +64,18 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'qiniu' => [
+            'driver' => 'qiniu',
+            'domains' => [
+                'default' => env("QINIU_HOST"), //你的七牛域名
+                'https' => env("QINIU_HOST"),         //你的HTTPS域名
+                'custom' => env("QINIU_HOST"),     //你的自定义域名
+            ],
+            'access_key' => env("QINIU_AK"),  //AccessKey
+            'secret_key' => env("QINIU_SK"),  //SecretKey
+            'bucket' => env("QINIU_BUCKET"),  //Bucket名字
+            'notify_url' => '',  //持久化处理回调地址
+        ],
     ],
 
 ];

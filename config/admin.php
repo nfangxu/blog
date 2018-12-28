@@ -129,12 +129,12 @@ return [
     'upload' => [
 
         // Disk in `config/filesystem.php`.
-        'disk' => 'admin',
+        'disk' => 'qiniu',
 
         // Image and file upload path under the disk above.
         'directory' => [
-            'image' => 'images',
-            'file' => 'files',
+            'image' => date("Ymd") . 'images',
+            'file' => date("Ymd") . 'files',
         ],
     ],
 
@@ -211,7 +211,7 @@ return [
     | Supported: "tencent", "google", "yandex".
     |
     */
-    'map_provider' => 'google',
+    'map_provider' => 'tencent',
 
     /*
     |--------------------------------------------------------------------------
