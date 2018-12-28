@@ -85,13 +85,20 @@ class ArticleController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Article);
-
-        $grid->id('文章ID');
+        $grid->model()->orderBy("id", "desc");
+        $grid->id('文章ID')->sortable();
         $grid->title('标题')->editable();
-        $grid->status('状态')->editable("select", ['已删除', '已发布', '草稿',]);;
+        $grid->status('状态')->sortable()
+            ->editable("select", ['已删除', '已发布', '草稿',]);;
         $grid->tags("标签")->pluck('name')->label();
         $grid->created_at('创建时间');
         $grid->updated_at('修改时间');
+
+        $grid->filter(function ($filter) {
+            // 设置created_at字段的范围查询
+            $filter->between('created_at', '创建时间')->datetime();
+            $filter->in('status', "文章状态")->checkbox(['已删除', '已发布', '草稿',]);
+        });
 
         return $grid;
     }
