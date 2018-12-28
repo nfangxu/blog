@@ -20,7 +20,15 @@ class ArticleController extends Controller
     public function detail(Request $request, $id)
     {
         $article = Article::query()->where("status", 1)->findOrFail($id);
-        return view("article.detail", compact("article"));
+        $tags = Tag::with("articles")->whereIn("id", $article->tags->pluck('id'))->get();
+        $articles = collect();
+        foreach ($tags as $tag) {
+            $articles = $articles->concat($tag->articles);
+        }
+        return view("article.detail", [
+            "article" => $article,
+            "articles" => $articles->whereNotIn("id", $id),
+        ]);
     }
 
     public function indexByTag(Request $request, $id)

@@ -96,6 +96,9 @@ class Spider extends Command
             "/<ul>(?<content>[\s\S]*?)<\/ul>/" => function ($r) {
                 return $r["content"];
             },
+            "/<strong>(?<content>[\s\S]*?)<\/strong>/" => function ($r) {
+                return "**" . $r["content"] . "**";
+            },
             "/<li>(?<content>[\s\S]*?)<\/li>/" => function ($r) {
                 return "- " . $r["content"];
             },
