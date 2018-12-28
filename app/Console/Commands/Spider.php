@@ -108,7 +108,7 @@ class Spider extends Command
             "/<h(?<times>\d)>(?<title>[\s\S]*?)<\/h\d>/" => function ($r) {
                 return (str_repeat("#", $r["times"]) . " " . $r["title"]);
             },
-            "/<img src=\"(?<url>[\s\S]*?)\"[\s\S]*?>/" => function ($r) {
+            "/<img[\s\S]*?src=\"(?<url>[\s\S]*?)\"[\s\S]*?>/" => function ($r) {
                 return "![图片]({$r['url']})";
             },
         ], $html);
