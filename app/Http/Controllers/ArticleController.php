@@ -19,7 +19,7 @@ class ArticleController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $article = Article::query()->findOrFail($id);
+        $article = Article::query()->where("status", 1)->findOrFail($id);
         return view("article.detail", compact("article"));
     }
 
