@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\LaravelChinaSpider;
+use App\Services\Spiders\LaravelAcademyPost;
 use App\Services\Spiders\LaravelChinaTopic;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(LaravelChinaSpider::class, LaravelChinaTopic::class);
+        $this->app->bind(LaravelChinaSpider::class, LaravelAcademyPost::class);
     }
 }
