@@ -7,6 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>{{ $article->title }}</h3>
+                        已有 {{ $article->visits()->count()}} 人阅读过
                     </div>
                     <div class="card-body markdown">
                         @if($article->content_html)

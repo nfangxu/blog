@@ -29,6 +29,9 @@ class ArticleController extends Controller
             $articles = $articles->concat($tag->articles);
         }
 
+        // 统计
+        $article->visits()->increment();
+
         // 视图
         return view("article.detail", [
             "article" => $article,
@@ -38,8 +41,12 @@ class ArticleController extends Controller
 
     public function indexByTag(Request $request, $id)
     {
-        $tags = Tag::with("articles")->findOrFail($id);
-        $articles = $tags->articles;
+        $tag = Tag::with("articles")->findOrFail($id);
+
+        // 统计
+        $tag->visits()->increment();
+
+        $articles = $tag->articles;
         return view("article.index", compact("articles"));
     }
 }

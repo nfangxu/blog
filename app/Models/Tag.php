@@ -14,4 +14,9 @@ class Tag extends Model
             ->where("status", 1)
             ->orderBy("updated_at", "desc");
     }
+
+    public function visits()
+    {
+        return visits($this);
+    }
 }
