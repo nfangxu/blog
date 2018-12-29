@@ -34,7 +34,6 @@ class LaravelChinaTopic implements LaravelChinaSpider
     public function tag()
     {
         return [
-            "Vaptcha",
             "laravel",
         ];
     }
