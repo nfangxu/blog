@@ -2,16 +2,14 @@
 
 namespace App\Console\Commands;
 
-use App\Contracts\LaravelChinaSpider;
 use App\Models\Article;
 use App\Models\Tag;
-use App\Services\Spiders\LaravelChinaTopic;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class Spider extends Command
 {
-    protected $signature = 'spider {url} {tags*}';
+    protected $signature = 'spider {url} {tags*} {--status=2}';
 
     protected $description = 'Command description';
 
@@ -20,10 +18,12 @@ class Spider extends Command
         $url = $this->argument("url");
 
         $spiderName = $this->choice("SpiderServices", [
+            "LaravelChinaTopic",
             "LaravelAcademyPost",
             "LaravelChinaDocs",
-            "LaravelChinaTopic",
-        ]);
+        ], 0);
+
+        $status = $this->option("status");
 
         $class = "App\\Services\\Spiders\\" . $spiderName;
         if (class_exists($class)) {
@@ -38,11 +38,11 @@ class Spider extends Command
                 "name" => $tag
             ])->id;
         }
-        return $spider->run($url, function ($title, $text) use ($tags) {
+        return $spider->run($url, function ($title, $text) use ($tags, $status) {
             $id = Article::query()->insertGetId([
                 "title" => $title,
                 "content" => $text,
-                "status" => 2,
+                "status" => $status,
                 "created_at" => now(),
                 "updated_at" => now(),
             ]);

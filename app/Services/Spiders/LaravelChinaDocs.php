@@ -8,7 +8,7 @@
 
 namespace App\Services\Spiders;
 
-use App\Contracts\LaravelChinaSpider;
+use App\Contracts\Spider;
 use App\Services\T;
 use Goutte\Client;
 use GuzzleHttp\Client as GzClient;
@@ -18,7 +18,7 @@ use GuzzleHttp\Client as GzClient;
  * Class LaravelChinaDocs
  * @package App\Services\Spiders
  */
-class LaravelChinaDocs implements LaravelChinaSpider
+class LaravelChinaDocs implements Spider
 {
     public function run($url, $callback)
     {
@@ -38,12 +38,5 @@ class LaravelChinaDocs implements LaravelChinaSpider
                     });
             });
         return true;
-    }
-
-    public function tag()
-    {
-        return [
-            "laravel",
-        ];
     }
 }
