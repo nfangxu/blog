@@ -85,12 +85,14 @@ class ArticleController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Article);
-        $grid->model()->orderBy("id", "desc");
+        $grid->model()->orderBy("id", "desc")->where("status", "<>", 0);
         $grid->id('文章ID')->sortable();
         $grid->title('标题')->editable();
-        $grid->status('状态')->sortable()
-            ->editable("select", ['已删除', '已发布', '草稿',]);;
         $grid->tags("标签")->pluck('name')->label();
+        $grid->status('状态')->switch([
+            "on" => ["value" => 1, "text" => "已发布", "color" => "success"],
+            "off" => ["value" => 2, "text" => "草稿", "color" => "danger"],
+        ]);
         $grid->created_at('创建时间');
         $grid->updated_at('修改时间');
 
@@ -133,13 +135,15 @@ class ArticleController extends Controller
     {
         $form = new Form(new Article);
 
+        $form->switch("status")->states([
+            "on" => ["value" => 1, "text" => "发布", "color" => "success"],
+            "off" => ["value" => 2, "text" => "草稿", "color" => "danger"],
+        ])->default(2);
+
         $form->multipleSelect('tags', '标签')->options(Tag::all()->pluck('name', 'id'));
         $form->text('title', '标题');
         $form->markdown('content', '内容')->height(500);
         $form->markdown('content_html', '抓取内容')->height(500);
-        $form->radio('status', '状态')->options([
-            "删除", "发布", "草稿"
-        ])->default(1);
 
         return $form;
     }
